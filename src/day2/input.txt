@@ -1,33 +1,5 @@
-function part1() {
-  const input = getInput();
-
-  const lines = input
-    .split("\n")
-    .map((line) => line.replace(/Game [\d]+:/, "").trim());
-
-  const maxBlue = 14;
-  const maxGreen = 13;
-  const maxRed = 12;
-  return lines.reduce((acc, curr, index) => {
-    const rounds = curr.split(";");
-    for (let round of rounds) {
-      const blueMatch = round.match(/(\d+) blue/);
-      const redMatch = round.match(/(\d+) red/);
-      const greenMatch = round.match(/(\d+) green/);
-      const blue = blueMatch ? Number(blueMatch[1]) : 0;
-      const green = greenMatch ? Number(greenMatch[1]) : 0;
-      const red = redMatch ? Number(redMatch[1]) : 0;
-      if (blue > maxBlue || green > maxGreen || red > maxRed) {
-        return acc;
-      }
-    }
-    return acc + index + 1;
-  }, 0);
-}
-
-function getInput() {
-  return `Game 1: 1 red, 3 blue, 11 green; 1 blue, 5 red; 3 blue, 5 green, 13 red; 6 red, 1 blue, 4 green; 16 red, 12 green
-    Game 2: 3 red, 13 blue, 5 green; 14 green, 14 blue; 9 blue, 10 green, 3 red; 2 green, 5 blue; 11 green, 3 blue, 3 red; 16 blue, 2 red, 9 green
+Game 1: 1 red, 3 blue, 11 green; 1 blue, 5 red; 3 blue, 5 green, 13 red; 6 red, 1 blue, 4 green; 16 red, 12 green
+Game 2: 3 red, 13 blue, 5 green; 14 green, 14 blue; 9 blue, 10 green, 3 red; 2 green, 5 blue; 11 green, 3 blue, 3 red; 16 blue, 2 red, 9 green
     Game 3: 17 blue, 5 red; 3 red, 11 green, 17 blue; 1 red, 6 blue, 9 green; 3 blue, 11 green, 1 red; 3 green, 10 red, 11 blue; 12 red, 3 green, 15 blue
     Game 4: 14 green, 14 red, 1 blue; 15 red, 13 green, 1 blue; 6 green, 15 red; 7 green
     Game 5: 3 green, 1 blue, 3 red; 6 red, 2 green, 2 blue; 12 red, 3 green, 1 blue; 2 green, 9 red; 1 blue; 2 blue, 10 red
@@ -125,5 +97,4 @@ function getInput() {
     Game 97: 5 red, 2 green; 8 red; 1 blue, 7 green, 2 red; 7 red, 15 green
     Game 98: 6 green, 1 blue, 1 red; 3 green, 3 red; 1 blue, 13 green, 4 red
     Game 99: 16 red, 5 blue, 9 green; 2 green, 7 blue, 2 red; 10 blue, 3 green; 9 red, 8 blue, 13 green; 16 green, 13 red, 10 blue
-    Game 100: 16 blue, 12 red, 3 green; 2 green, 7 blue; 5 blue, 4 green; 10 blue, 6 red, 6 green; 5 red, 12 blue, 2 green; 9 red, 12 blue, 11 green`;
-}
+    Game 100: 16 blue, 12 red, 3 green; 2 green, 7 blue; 5 blue, 4 green; 10 blue, 6 red, 6 green; 5 red, 12 blue, 2 green; 9 red, 12 blue, 11 green

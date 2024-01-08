@@ -1,36 +1,4 @@
-const numMap = {
-  one: "1",
-  two: "2",
-  three: "3",
-  four: "4",
-  five: "5",
-  six: "6",
-  seven: "7",
-  eight: "8",
-  nine: "9",
-};
-
-function sumOfCalibrationValues(input: string) {
-  const lines = input.split("\n");
-
-  return lines
-    .filter((el) => el.match(/\d/))
-    .map((el) => {
-      const onlyDigits = el
-        .replace(
-          /(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)/g,
-          (str) => numMap[str]
-        )
-        .replace(/\D/g, "");
-      return Number(onlyDigits[0] + onlyDigits.slice(-1));
-    })
-    .reduce((acc, curr) => acc + curr, 0);
-}
-
-console.log(sumOfCalibrationValues(getInput()));
-
-function getInput() {
-  return `four9one
+four9one
 bbzhsmnmtf8kftwosevenxfkssgrcjthree
 6pkkcddsixsixjgnjvdtjtwo
 4four45seven7nine7two
@@ -1029,5 +997,4 @@ htsrn3qdbskfsd211
 tdbjsvfxv67htbpmfx
 6l
 pdzseightjvjxlhgjhrnz9zzjbcrktjc99
-fourzqlhcjksixthreejrl9`;
-}
+fourzqlhcjksixthreejrl9
