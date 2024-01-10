@@ -1,16 +1,17 @@
 const fs = require("fs");
 
+console.time();
+
 function isSymbol(str: string) {
   return str.match(/[^.\d]/);
 }
 
 function searchLine(line: string, startIndex: number, numLen: number) {
-  const found = [
+  return [
     startIndex - 1,
     ...Array.from(Array(numLen).keys()).map((j) => startIndex + j),
     startIndex + numLen,
   ].find((v) => !!line[v] && isSymbol(line[v]));
-  return found && line[found];
 }
 
 function part1(input: string) {
@@ -23,28 +24,22 @@ function part1(input: string) {
     const line = lines[i];
     const nextLine = i + 1 < lines.length ? lines[i + 1] : null;
 
-    console.log(line, nextLine, prevLine);
-
     //Numbers
     const numbers = [...line.matchAll(/[\d]+/g)];
 
     // Add to sum with reduce
     sum = numbers
       .filter(({ "0": number, index }) => {
-        if (!index) {
+        if (index === undefined) {
           return false;
         }
-        const neighbours = [
-          index - 1 >= 0 && isSymbol(line[index - 1]),
-          index + number.length < line.length &&
-            isSymbol(line[index + number.length]),
-          prevLine && searchLine(prevLine, index, number.length),
-          nextLine && searchLine(nextLine, index, number.length),
-        ];
-
-        console.log(number, index, neighbours);
-
-        return neighbours.some((v) => v);
+        return (
+          (index - 1 >= 0 && isSymbol(line[index - 1])) ||
+          (index + number.length < line.length &&
+            isSymbol(line[index + number.length])) ||
+          (prevLine && searchLine(prevLine, index, number.length)) ||
+          (nextLine && searchLine(nextLine, index, number.length))
+        );
       })
       .map(({ "0": number }) => Number(number))
       .reduce((acc, curr) => acc + curr, sum);
@@ -54,5 +49,7 @@ function part1(input: string) {
 }
 
 const input = fs.readFileSync(__dirname + "/input.txt", "utf-8");
-// Solution 335497
-console.log(part1(input));
+// Solution 525181
+const solution = part1(input);
+console.timeEnd();
+console.log(`The solution is: ${solution}`);
