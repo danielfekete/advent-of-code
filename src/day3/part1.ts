@@ -34,9 +34,7 @@ function part1(input: string) {
           return false;
         }
         return (
-          (index - 1 >= 0 && isSymbol(line[index - 1])) ||
-          (index + number.length < line.length &&
-            isSymbol(line[index + number.length])) ||
+          searchLine(line, index, number.length) ||
           (prevLine && searchLine(prevLine, index, number.length)) ||
           (nextLine && searchLine(nextLine, index, number.length))
         );
