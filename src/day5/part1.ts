@@ -2,38 +2,51 @@ const fs = require("fs");
 
 console.time();
 
-function getDestinationNumber(
-  sourceNumber: number,
-  destinationStart: number,
-  sourceStart: number,
-  length: number
-) {
-  if (sourceNumber > sourceStart || sourceNumber > sourceStart + length) {
-    return sourceNumber;
-  }
-  return destinationStart + (sourceNumber - sourceStart);
-}
-
 function part1(input: string) {
-  let seeds: number[] = [];
-
-  //   console.log([...(input.matchAll(/seeds: (.)+\n/g) || [])]);
+  let destinationNums: number[] = [];
 
   input.split("\n\n").forEach((line, i) => {
-    console.log(i, line.replace(/.+:/, ""));
-    // Get the seeds
-    // if (line.match(/seeds:/)) {
-    //   seeds = [
-    //     ...line
-    //       .replace(/seeds:/, "")
-    //       .trim()
-    //       .split(/\s/),
-    //   ];
-    // }
-    // console.log(i, line);
+    const nums = line
+      .replace(/(.+):/, "")
+      .trim()
+      .split(/\s/)
+      .map((str) => Number(str));
+    // seeds
+    if (i === 0) {
+      destinationNums = [...nums];
+      return;
+    }
+
+    for (let i = 0; i < destinationNums.length; i++) {
+      const num = destinationNums[i];
+      for (let j = 0; j < nums.length; j += 3) {
+        let [destinationStart, sourceStart, length] = [
+          nums[j],
+          nums[j + 1],
+          nums[j + 2],
+        ];
+        const diff = num - sourceStart;
+
+        if (diff > length || num < sourceStart) {
+          continue;
+        }
+
+        const newDestinationNumber = destinationStart + diff;
+
+        if (
+          destinationNums[i] === num ||
+          num - newDestinationNumber < num - destinationNums[i]
+        ) {
+          destinationNums[i] = newDestinationNumber;
+        }
+      }
+    }
   });
+
+  return destinationNums.sort((a, b) => a - b)[0];
 }
 
 const input = fs.readFileSync(__dirname + "/input.txt", "utf-8");
 const result = part1(input);
+console.timeEnd();
 console.log(result);
