@@ -20,8 +20,7 @@ function part1(input: string) {
 
     while (j >= 0 && (!stopLeftSide || !stopRightSide) && i <= time) {
       if (!stopLeftSide) {
-        const distance = j * (time - j);
-        if (distance <= distances[index]) {
+        if (j * (time - j) <= distances[index]) {
           stopLeftSide = true;
         } else {
           numOfPossibleTimes++;
@@ -29,8 +28,7 @@ function part1(input: string) {
         }
       }
       if (!stopRightSide) {
-        const distance = i * (time - i);
-        if (distance <= distances[index]) {
+        if (i * (time - i) <= distances[index]) {
           stopRightSide = true;
         } else {
           numOfPossibleTimes++;
