@@ -31,14 +31,8 @@ function part1(input: string) {
           continue;
         }
 
-        const newDestinationNumber = destinationStart + diff;
-
-        if (
-          destinationNums[i] === num ||
-          num - newDestinationNumber < num - destinationNums[i]
-        ) {
-          destinationNums[i] = newDestinationNumber;
-        }
+        destinationNums[i] = destinationStart + diff;
+        break;
       }
     }
   });
